@@ -1,6 +1,4 @@
----
-title: Plain Blog
----
+# Plain Blog
 
 [The plain blog builder](https://weareoutman.github.io/plain-blog/) which emits zero client side JavaScript. With minimal configure, your blog will be fast and elegant.
 
