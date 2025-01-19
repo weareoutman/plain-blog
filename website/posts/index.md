@@ -67,7 +67,7 @@ export default {
 
 Note: in order to enable ESM for `.js` files, you have to set `"type": "module"` for your `package.json`.
 
-[The config](https://github.com/weareoutman/plain-blog/blob/main/plain.config.js) of our [documentation site](https://weareoutman.github.io/plain-blog/) is just as simple as above, with [several lines of css](https://github.com/weareoutman/plain-blog/blob/main/src/styles.css), it's not bad.
+[The config](https://github.com/weareoutman/plain-blog/blob/main/website/plain.config.js) of our [documentation site](https://weareoutman.github.io/plain-blog/) is just as simple as above, with [several lines of css](https://github.com/weareoutman/plain-blog/blob/main/website/src/styles.css), it's not bad.
 
 Wit a little more work, it can look nicer, just like [my personal blog](https://www.wangshenwei.com/).
 
