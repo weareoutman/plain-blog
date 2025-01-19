@@ -69,7 +69,7 @@ export function createLoader() {
 
     cssAssets.length = 0;
 
-    return { stylesheets: [`${settings.assetsPublicPath}/${asset.filename}`] };
+    return { stylesheets: [`${settings.assetsPublicPath}${asset.filename}`] };
   }
 
   return { init, flush };
