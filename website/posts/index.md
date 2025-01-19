@@ -2,7 +2,7 @@
 title: Plain Blog
 ---
 
-[The plain blog builder](https://github.com/weareoutman/plain-blog) which emits zero client side JavaScript. With minimal configure, your blog will be fast and elegant.
+The plain blog builder (https://github.com/weareoutman/plain-blog) which emits zero client side JavaScript. With minimal configure, your blog will be fast and elegant.
 
 It's fast, both at run time and build time. For [my own person blog](https://www.wangshenwei.com/), which includes a dozen of articles and about 50 images, it builds in less than 1 seconds.
 
