@@ -1,6 +1,8 @@
-# Plain Blog
+---
+title: Plain Blog
+---
 
-The plain blog builder which emits zero client side JavaScript. With minimal configure, your blog will be fast and elegant.
+[The plain blog builder](https://weareoutman.github.io/plain-blog/) which emits zero client side JavaScript. With minimal configure, your blog will be fast and elegant.
 
 It's fast, both at run time and build time. For [my own person blog](https://www.wangshenwei.com/), which includes a dozen of articles and about 50 images, it builds in less than 1 seconds.
 
@@ -65,7 +67,7 @@ export default {
 
 Note: in order to enable ESM for `.js` files, you have to set `"type": "module"` for your `package.json`.
 
-[The config](https://github.com/weareoutman/plain-blog/blob/main/plain.config.js) of our [documentation site] is just as simple as above, with [several lines of css](https://github.com/weareoutman/plain-blog/blob/main/src/styles.css), it's not bad.
+[The config](https://github.com/weareoutman/plain-blog/blob/main/plain.config.js) of our [documentation site](https://weareoutman.github.io/plain-blog/) is just as simple as above, with [several lines of css](https://github.com/weareoutman/plain-blog/blob/main/src/styles.css), it's not bad.
 
 Wit a little more work, it can look nicer, just like [my personal blog](https://www.wangshenwei.com/).
 
