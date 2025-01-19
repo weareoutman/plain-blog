@@ -1,0 +1,9 @@
+node_modules
+.vscode
+.idea
+.DS_Store
+.schema
+*.log
+report.*.json
+
+dist

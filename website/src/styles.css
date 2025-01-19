@@ -1,0 +1,26 @@
+header,
+footer,
+main {
+  width: 100%;
+  max-width: 704px;
+  padding: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+a,
+a:visited {
+  color: rgb(230, 59, 26);
+  text-decoration: none;
+}
+
+a:hover {
+  box-shadow: 0 1px 0 0 currentColor;
+}
+
+article > p > img {
+  display: block;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
