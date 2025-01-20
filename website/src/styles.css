@@ -1,3 +1,7 @@
+html {
+  --primary-color: rgb(230, 59, 26);
+}
+
 header,
 footer,
 main {
@@ -10,7 +14,7 @@ main {
 
 a,
 a:visited {
-  color: rgb(230, 59, 26);
+  color: var(--primary-color);
   text-decoration: none;
 }
 
@@ -23,4 +27,10 @@ article > p > img {
   max-width: 100%;
   margin-left: auto;
   margin-right: auto;
+}
+
+:not(pre) > code {
+  background-color: hsl(10, 20%, 94%);
+  color: var(--primary-color);
+  padding: 0 3px;
 }
