@@ -38,6 +38,8 @@ export interface SiteConfig {
      * such as `src/components/Article.jsx`
      */
     Article?: string;
+    Header?: string;
+    Footer?: string;
   };
 
   /**
@@ -69,6 +71,17 @@ export interface ArticleProps {
 
 export type ArticleComponent = FC<ArticleProps>;
 
+export type HeaderComponent = FC<{ type?: "home" | "article" }>;
+
+export type FooterComponent = FC<{ type?: "home" | "article" }>;
+
+export interface ComponentMap {
+  Home: HomeComponent;
+  Article: ArticleComponent;
+  Header: HeaderComponent;
+  Footer: FooterComponent;
+}
+
 export interface SiteMetadata {
   /** Site title */
   title?: string;
@@ -87,5 +100,13 @@ export interface SiteContextValue {
   frontmatter?: Record<string, any>;
   summary?: string;
   meta?: Record<string, string | undefined | null>;
+  stylesheets?: string[];
+  Header: HeaderComponent;
+  Footer: FooterComponent;
+}
+
+export interface JobContext {
+  baseUrl: string;
+  site: SiteMetadata;
   stylesheets?: string[];
 }

@@ -1,9 +1,8 @@
 ---
-title: Plain Blog
-date: 2025-01-19
+title: Introducing Plain Blog
 ---
 
-[The Plain Blog builder](https://github.com/weareoutman/plain-blog) which emits zero client-side JavaScript. With minimal configuration, your blog will be fast and elegant.
+[The Plain Blog builder](https://weareoutman.github.io/plain-blog/) which emits zero client-side JavaScript. With minimal configuration, your blog will be fast and elegant.
 
 Although it emits no JavaScript to the the client-side, you can composite your page layout using React components, writing content in markdown or MDX. So blogs built with similar tech like [Gatsby](https://www.gatsbyjs.com/) can migrate to Plain Blog with little effort.
 
@@ -97,23 +96,11 @@ export default {
 
 With a little more work, such as [customizing components](https://github.com/weareoutman/wangshenwei.com/blob/master/plain.config.js), it can look nicer, just like [my personal blog](https://www.wangshenwei.com/).
 
-## Features tracking
+Read more:
 
-- [x] MDX pages
-- [x] JSX pages
-- [x] Zero client-side JavaScript
-- [x] SEO optimized
-- [x] Auto generated index page that lists all posts
-- [x] Custom css
-- [x] Custom page components
-- [x] Prism code blocks
-- [x] Custom base url
-- [x] Images (image mark in MD, imports in MD/JS)
-- [x] Images optimized (auto resized to no more than 1400px wide, by default)
-- [ ] Images of `url()` in css
-- [ ] Nested folders of posts structure
-- [ ] Social image by article
-- [ ] TypeScript (wait for [Deno to support module hooks](https://github.com/denoland/deno/issues/23201))
+- [Features tracking](../features-tracking)
+- [Customizing-components](../customizing-components)
+- To be continued...
 
 ## License
 

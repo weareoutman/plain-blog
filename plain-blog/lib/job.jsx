@@ -16,11 +16,10 @@ const PAGE_EXT_REGEX = /\.(?:md|js)x?$/;
  */
 
 /**
- * @typedef {import("plain-blog").ArticleComponent} ArticleComponent
- * @typedef {import("plain-blog").HomeComponent} HomeComponent
+ * @typedef {import("plain-blog").ComponentMap} ComponentMap
  * @typedef {import("plain-blog").SiteContextValue} SiteContextValue
- * @typedef {{ Article: ArticleComponent; Home: HomeComponent; }} Components
- * @typedef {{ distDir: string; postsDir: string; components: Components; stylesheets?: string[]; context: SiteContextValue }} JobOptions
+ * @typedef {import("plain-blog").JobContext} JobContext
+ * @typedef {{ distDir: string; postsDir: string; components: ComponentMap; stylesheets?: string[]; context: JobContext }} JobOptions
  */
 
 /**
@@ -29,22 +28,31 @@ const PAGE_EXT_REGEX = /\.(?:md|js)x?$/;
 export default async function job({
   distDir,
   postsDir,
-  components: { Article, Home },
+  components: { Article, Home, Header, Footer },
   context,
 }) {
   const posts = [];
   let hasIndex = false;
+  let hasOrderPrefix = false;
   const site = context.site;
 
   for (const dirent of await readdir(postsDir, { withFileTypes: true })) {
     if (dirent.isFile()) {
       if (PAGE_EXT_REGEX.test(dirent.name)) {
         console.log("Building", dirent.name);
-        const basename = dirent.name.replace(PAGE_EXT_REGEX, "");
+        let basename = dirent.name.replace(PAGE_EXT_REGEX, "");
         const isIndex = basename === "index";
+        let order = "";
         if (isIndex) {
           hasIndex = true;
+        } else if (/^\d+-/.test(basename)) {
+          const matches = basename.match(/^(\d+)-(.*)$/);
+          if (matches) {
+            [, order, basename] = matches;
+            hasOrderPrefix = true;
+          }
         }
+
         const folder = isIndex ? distDir : path.join(distDir, basename);
         const url = `${context.baseUrl}${basename}/`;
 
@@ -83,7 +91,7 @@ export default async function job({
         };
 
         const { prelude } = await prerenderToNodeStream(
-          <SiteContext.Provider value={{...context, frontmatter, summary, url, meta}}>
+          <SiteContext.Provider value={{...context, frontmatter, summary, url, meta, Header, Footer}}>
             <Article>
               <Content />
             </Article>
@@ -99,7 +107,7 @@ export default async function job({
         await finished(writableStream);
 
         if (title) {
-          posts.push({ url, title, date: frontmatter?.date, summary: summary });
+          posts.push({ url, title, date: frontmatter?.date, summary: summary, order });
         }
       }
     }
@@ -125,12 +133,16 @@ export default async function job({
       "twitter:image": imageUrl,
     };
 
-    posts.sort((a, b) => (+new Date(b.date)) - +(new Date(a.date)));
+    if (hasOrderPrefix) {
+      posts.sort((a, b) => a.order > b.order ? 1 : a.order < b.order ? -1 : 0);
+    } else {
+      posts.sort((a, b) => (+new Date(b.date)) - +(new Date(a.date)));
+    }
 
     const listHtmlPath = path.join(distDir, "index.html");
 
     const { prelude } = await prerenderToNodeStream(
-      <SiteContext.Provider value={{...context, meta}}>
+      <SiteContext.Provider value={{...context, meta, Header, Footer}}>
         <Home posts={posts} />
       </SiteContext.Provider>
     );

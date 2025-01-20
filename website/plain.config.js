@@ -1,7 +1,7 @@
 // @ts-check
 /** @type {import("plain-blog").SiteConfig} */
 export default {
-  baseUrl: "/plain-blog/",
+  // baseUrl: "/plain-blog/",
   site: {
     title: "Plain Blog",
     description: "The plain blog builder which emits zero client side JavaScript. With minimal configure, your blog will be fast and elegant.",
@@ -11,10 +11,12 @@ export default {
   // posts: {
   //   path: "posts",
   // },
-  // components: {
-  //   Article: "src/components/Article.jsx",
-  //   Home: "src/components/Home.jsx",
-  // },
+  components: {
+    Header: "src/components/Header.jsx",
+    Footer: "src/components/Footer.jsx",
+    // Article: "src/components/Article.jsx",
+    // Home: "src/components/Home.jsx",
+  },
   styles: [
     // You can use http resources for convenient, but it slows down the build.
     // "https://unpkg.com/sanitize.css",

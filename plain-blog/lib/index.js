@@ -57,7 +57,7 @@ initJsx(loaderCommonOptions);
 initMdx(loaderCommonOptions);
 
 /**
- * @type {import("plain-blog").SiteContextValue}
+ * @type {import("plain-blog").JobContext}
  */
 const context = {
   baseUrl,
@@ -78,13 +78,16 @@ for (const css of config.styles ?? []) {
   );
 }
 
-const Article = config.components?.Article
-  ? (await import(path.resolve(process.cwd(), config.components.Article))).default
-  : (await import("../templates/Article.jsx")).default;
-const Home = config.components?.Home
-  ? (await import(path.resolve(process.cwd(), config.components.Home))).default
-  : (await import("../templates/Home.jsx")).default;
-const components = { Article, Home };
+const componentNames = ["Article", "Home", "Header", "Footer"];
+/** @type {import("plain-blog").ComponentMap} */
+const components = Object.fromEntries(await Promise.all(componentNames.map(async (name) =>
+  [
+    name,
+    config.components?.[name]
+      ? (await import(path.resolve(process.cwd(), config.components[name]))).default
+      : (await import(`../templates/${name}.jsx`)).default
+  ]
+)));
 
 context.stylesheets = (await flushCss()).stylesheets;
 
