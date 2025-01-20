@@ -1,7 +1,7 @@
 // @ts-check
 /** @type {import("plain-blog").SiteConfig} */
 export default {
-  // baseUrl: "/plain-blog/",
+  baseUrl: "/plain-blog/",
   site: {
     title: "Plain Blog",
     description: "The plain blog builder which emits zero client side JavaScript. With minimal configure, your blog will be fast and elegant.",
