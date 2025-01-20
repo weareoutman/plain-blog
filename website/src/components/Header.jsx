@@ -6,7 +6,7 @@ export default function Header(props) {
   const { baseUrl, site } = useSiteContext();
 
   return (
-    <header style={{ display: "flex", justifyContent: "space-between" }}>
+    <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
       {props.type === "home"
         ? <h1>{site.title}</h1>
         : <a href={baseUrl}>{site.title}</a>
