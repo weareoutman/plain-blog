@@ -99,5 +99,10 @@ for (const asset of assets) {
   await writeFile(filePath, new Uint8Array(asset.buffer));
 }
 
+const cnamePath = path.join(process.cwd(), "CNAME");
+if (existsSync(cnamePath)) {
+  await copyFile(cnamePath, path.join(distDir, "CNAME"));
+}
+
 const cost = performance.now() - start;
 console.log("All done in %s", `${(cost / 1000).toFixed(2)}s`);
