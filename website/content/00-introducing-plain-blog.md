@@ -36,7 +36,7 @@ By default, the Plain Blog recognize the following file structure by default:
 
 ```text
 your-blog
-├── articles
+├── content
 │   ├── hello-world.md
 │   ├── my-article.mdx
 │   └── my-page.jsx
@@ -46,24 +46,27 @@ your-blog
 └── package.json
 ```
 
-First, create `package.json`:
+For md/mdx/jsx files in content, they will be compiled to html files. For example `content/hello-world.md` will compiled to `dist/hello-world/index.html`, so you can visit `/hello-world/` from your website. For other files in content not starting with a dot, will be copied as it is.
+
+If you choose to build it from scratch, first create `package.json`:
 
 ```json
 {
   "type": "module",
   "scripts": {
     "build": "plain-blog",
-    "watch": "node --watch node_modules/.bin/plain-blog"
+    "dev": "NODE_ENV=development plain-blog",
+    "watch": "NODE_ENV=development plain-blog node --watch ./node_modules/.bin/plain-blog",
+    "serve": "serve dist"
   },
   "devDependencies": {
-    "plain-blog": "^0.1.1"
+    "plain-blog": ">=0.4.0",
+    "serve": "^14.2.4"
   }
 }
 ```
 
-Then run `npm install && npm run build`.
-
-And your site has been built. Serve the `dist` folder with any static server, such as by running `python3 -m http.server --directory dist`.
+Then run `npm install && npm run build`. And your site has been built, run `npm run serve`, or serve the `dist` folder with any static server.
 
 The index page may have only a header and footer by now, try adding some markdown files in `articles`, and run `npm run build` again.
 

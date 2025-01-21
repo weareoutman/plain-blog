@@ -44,7 +44,9 @@ your-blog
 └── package.json
 ```
 
-First, create `package.json`:
+For md/mdx/jsx files in content, they will be compiled to html files. For example `content/hello-world.md` will compiled to `dist/hello-world/index.html`, so you can visit `/hello-world/` from your website. For other files in content not starting with a dot, will be copied as it is.
+
+If you choose to build it from scratch, first create `package.json`:
 
 ```json
 {
@@ -54,14 +56,13 @@ First, create `package.json`:
     "watch": "node --watch node_modules/.bin/plain-blog"
   },
   "devDependencies": {
-    "plain-blog": "^0.1.1"
+    "plain-blog": ">=0.4.0",
+    "serve": "^14.2.4"
   }
 }
 ```
 
-Then run `npm install && npm run build`.
-
-And your site has been built. Serve the `dist` folder with any static server, such as by running `python3 -m http.server --directory dist`.
+Then run `npm install && npm run build`. And your site has been built, run `npm run serve`, or serve the `dist` folder with any static server.
 
 The index page may have only a header and footer by now, try adding some markdown files in `content`, and run `npm run build` again.
 
@@ -105,10 +106,10 @@ With a little more work, such as [customizing components](https://github.com/wea
 - [x] Custom page components
 - [x] Prism code blocks
 - [x] Custom base url
+- [x] Nested folders in content
 - [x] Images (image mark in MD, imports in MD/JS)
 - [x] Images optimized (auto resized to no more than 1400px wide, by default)
 - [ ] Images of `url()` in css
-- [ ] Nested folders in content
 - [ ] Social image by article
 - [ ] TypeScript (wait for [Deno to support module hooks](https://github.com/denoland/deno/issues/23201))
 
