@@ -7,22 +7,22 @@ import Page from "./Page.jsx";
  * @param {import("plain-blog").HomeProps} props
  * @returns {import("react").JSX.Element}
  */
-export default function Home({ posts }) {
+export default function Home({ articles }) {
   const { site, meta, Header, Footer } = useSiteContext();
 
   return (
     <Page title={site.title} meta={meta}>
       <Header type="home" />
       <main>
-        {posts.map((post, index) => (
+        {articles.map((article, index) => (
           <section key={index}>
             <h2>
-              <a href={post.url}>{post.title}</a>
+              <a href={article.url}>{article.title}</a>
             </h2>
-            {post.date && <p>{post.date}</p>}
-            {post.summary && (
+            {article.date && <p>{article.date}</p>}
+            {article.summary && (
               <article>
-                <p>{post.summary}</p>
+                <p>{article.summary}</p>
               </article>
             )}
           </section>

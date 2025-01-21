@@ -1,7 +1,7 @@
 // @ts-check
 import path from "node:path";
 import { createWriteStream } from "node:fs";
-import { mkdir, readdir } from "node:fs/promises";
+import { copyFile, mkdir, readdir } from "node:fs/promises";
 import { finished } from "node:stream/promises";
 import { prerenderToNodeStream } from "react-dom/static";
 import React from "react";
@@ -19,7 +19,7 @@ const PAGE_EXT_REGEX = /\.(?:md|js)x?$/;
  * @typedef {import("plain-blog").ComponentMap} ComponentMap
  * @typedef {import("plain-blog").SiteContextValue} SiteContextValue
  * @typedef {import("plain-blog").JobContext} JobContext
- * @typedef {{ distDir: string; postsDir: string; components: ComponentMap; stylesheets?: string[]; context: JobContext }} JobOptions
+ * @typedef {{ distDir: string; contentDir: string; components: ComponentMap; stylesheets?: string[]; context: JobContext }} JobOptions
  */
 
 /**
@@ -27,16 +27,16 @@ const PAGE_EXT_REGEX = /\.(?:md|js)x?$/;
  */
 export default async function job({
   distDir,
-  postsDir,
+  contentDir,
   components: { Article, Home, Header, Footer },
   context,
 }) {
-  const posts = [];
+  const articles = [];
   let hasIndex = false;
   let hasOrderPrefix = false;
   const site = context.site;
 
-  for (const dirent of await readdir(postsDir, { withFileTypes: true })) {
+  for (const dirent of await readdir(contentDir, { withFileTypes: true })) {
     if (dirent.isFile()) {
       if (PAGE_EXT_REGEX.test(dirent.name)) {
         console.log("Building", dirent.name);
@@ -46,8 +46,9 @@ export default async function job({
         let order = "";
         if (isIndex) {
           hasIndex = true;
-        } else if (/^\d+-/.test(basename)) {
-          const matches = basename.match(/^(\d+)-(.*)$/);
+        } else if (/^\d\d+-/.test(basename)) {
+          // If the file name starts with a number with at least two digits followed by a dash, it will be treated as an ordered article.
+          const matches = basename.match(/^(\d\d+)-(.*)$/);
           if (matches) {
             [, order, basename] = matches;
             hasOrderPrefix = true;
@@ -58,15 +59,15 @@ export default async function job({
         const url = `${context.baseUrl}${basename}/`;
 
         // if (basename === assetsPathPart) {
-        //   throw new Error("The folder of the post cannot be the same as the assets folder.");
+        //   throw new Error("The folder of the article cannot be the same as the assets folder.");
         // }
 
-        const Content = (await import(path.join(postsDir, dirent.name))).default;
+        const Content = (await import(path.join(contentDir, dirent.name))).default;
         const { frontmatter, summary } = await flushMdx();
 
         const title = frontmatter?.title;
         if (!title) {
-          console.warn("No title found in", path.join(postsDir, dirent.name));
+          console.warn("No title found in", path.join(contentDir, dirent.name));
         }
 
         const description = frontmatter?.description;
@@ -110,8 +111,11 @@ export default async function job({
         await finished(writableStream);
 
         if (title && !is404) {
-          posts.push({ url, title, date: frontmatter?.date, summary: summary, order });
+          articles.push({ url, title, date: frontmatter?.date, summary: summary, order });
         }
+      } else if (!dirent.name.startsWith(".")) {
+        // Copy files other than jsx/md/mdx and not started with a dot.
+        await copyFile(path.join(contentDir, dirent.name), path.join(distDir, dirent.name));
       }
     }
   }
@@ -137,16 +141,16 @@ export default async function job({
     };
 
     if (hasOrderPrefix) {
-      posts.sort((a, b) => a.order > b.order ? 1 : a.order < b.order ? -1 : 0);
+      articles.sort((a, b) => a.order > b.order ? 1 : a.order < b.order ? -1 : 0);
     } else {
-      posts.sort((a, b) => (+new Date(b.date)) - +(new Date(a.date)));
+      articles.sort((a, b) => (+new Date(b.date)) - +(new Date(a.date)));
     }
 
     const listHtmlPath = path.join(distDir, "index.html");
 
     const { prelude } = await prerenderToNodeStream(
       <SiteContext.Provider value={{...context, meta, Header, Footer}}>
-        <Home posts={posts} />
+        <Home articles={articles} />
       </SiteContext.Provider>
     );
 

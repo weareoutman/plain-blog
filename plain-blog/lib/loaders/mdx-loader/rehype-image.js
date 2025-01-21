@@ -18,7 +18,7 @@ export default function rehypeImage(options) {
 
       if (isRelativeUrl(src)) {
         promises.push((async () => {
-          const filePath = path.resolve(options.postsDir, src);
+          const filePath = path.resolve(options.contentDir, src);
           const originalContent = await readFile(filePath);
           const content = filePath.endsWith(".svg") ? originalContent : await resizeImage(originalContent);
 

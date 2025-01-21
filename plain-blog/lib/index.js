@@ -24,7 +24,7 @@ const assetsPathPart = "assets";
 const baseUrl = config.baseUrl || "/";
 const assetsPublicPath = `${baseUrl}${assetsPathPart}/`;
 const assetsDir = path.join(distDir, assetsPathPart);
-const postsDir = path.resolve(process.cwd(), config.posts?.path ?? "posts");
+const contentDir = path.resolve(process.cwd(), config.content?.path ?? "content");
 const favicon = config.site?.favicon ?? "assets/favicon.png";
 
 await rm(distDir, { recursive: true, force: true });
@@ -47,7 +47,7 @@ const onEmitAsset = (asset) => {
 
 const loaderCommonOptions = {
   assetsPublicPath,
-  postsDir,
+  contentDir,
   onEmitAsset,
 };
 
@@ -92,16 +92,11 @@ const components = Object.fromEntries(await Promise.all(componentNames.map(async
 context.stylesheets = (await flushCss()).stylesheets;
 
 const job = (await import("./job.jsx")).default;
-await job({ distDir, postsDir, components, context });
+await job({ distDir, contentDir, components, context });
 
 for (const asset of assets) {
   const filePath = path.join(assetsDir, asset.filename);
   await writeFile(filePath, new Uint8Array(asset.buffer));
-}
-
-const cnamePath = path.join(process.cwd(), "CNAME");
-if (existsSync(cnamePath)) {
-  await copyFile(cnamePath, path.join(distDir, "CNAME"));
 }
 
 const cost = performance.now() - start;

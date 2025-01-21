@@ -48,7 +48,7 @@ export function createLoader() {
       data: {
         port: port2,
         assetsPublicPath: settings.assetsPublicPath,
-        postsDir: settings.postsDir,
+        contentDir: settings.contentDir,
       },
       transferList: [port2],
     });

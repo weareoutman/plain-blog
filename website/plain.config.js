@@ -8,8 +8,8 @@ export default {
     favicon: "assets/favicon.svg",
     url: "https://plain-blog.js.org",
   },
-  // posts: {
-  //   path: "posts",
+  // content: {
+  //   path: "content",
   // },
   components: {
     Header: "src/components/Header.jsx",

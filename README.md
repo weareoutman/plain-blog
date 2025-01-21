@@ -34,7 +34,7 @@ By default, the Plain Blog recognize the following file structure by default:
 
 ```text
 your-blog
-├── posts
+├── content
 │   ├── hello-world.md
 │   ├── my-article.mdx
 │   └── my-page.jsx
@@ -63,7 +63,7 @@ Then run `npm install && npm run build`.
 
 And your site has been built. Serve the `dist` folder with any static server, such as by running `python3 -m http.server --directory dist`.
 
-The index page may have only a header and footer by now, try adding some markdown files in `posts`, and run `npm run build` again.
+The index page may have only a header and footer by now, try adding some markdown files in `content`, and run `npm run build` again.
 
 In most case, you need some custom css, as well as other configs to improve your blog. Add a config file named `plain.config.js` in your project root:
 
@@ -100,7 +100,7 @@ With a little more work, such as [customizing components](https://github.com/wea
 - [x] JSX pages
 - [x] Zero client-side JavaScript
 - [x] SEO optimized
-- [x] Auto generated index page that lists all posts
+- [x] Auto generated index page that lists all articles
 - [x] Custom css
 - [x] Custom page components
 - [x] Prism code blocks
@@ -108,7 +108,7 @@ With a little more work, such as [customizing components](https://github.com/wea
 - [x] Images (image mark in MD, imports in MD/JS)
 - [x] Images optimized (auto resized to no more than 1400px wide, by default)
 - [ ] Images of `url()` in css
-- [ ] Nested folders of posts structure
+- [ ] Nested folders in content
 - [ ] Social image by article
 - [ ] TypeScript (wait for [Deno to support module hooks](https://github.com/denoland/deno/issues/23201))
 

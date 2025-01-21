@@ -16,10 +16,12 @@ export interface SiteConfig {
     path?: string;
   };
 
-  posts?: {
+  content?: {
     /**
-     * Scan articles in this path relative to your project root
-     * @default "posts"
+     * Convert md/mdx/jsx files as articles in this path,
+     * and copy other files not started with a dot to the output directory.
+     *
+     * @default "content"
      */
     path?: string;
   };
@@ -53,10 +55,10 @@ export interface SiteConfig {
 }
 
 export interface HomeProps {
-  posts: Post[];
+  articles: Article[];
 }
 
-export interface Post {
+export interface Article {
   url: string;
   title: string;
   summary?: string;

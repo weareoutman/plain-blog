@@ -56,7 +56,7 @@ export function createHook(options) {
             onEmitAsset(asset) {
               settings.port.postMessage(asset);
             },
-            postsDir: settings.postsDir,
+            contentDir: settings.contentDir,
             assetsPublicPath: settings.assetsPublicPath,
           },
         ]
