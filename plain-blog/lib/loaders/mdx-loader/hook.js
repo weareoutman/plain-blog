@@ -41,6 +41,7 @@ export function createHook(options) {
         [
           rehypeSummary,
           {
+            locales: settings.locales,
             setSummary(value) {
               settings.port.postMessage({
                 type: "summary",

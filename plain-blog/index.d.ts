@@ -8,6 +8,14 @@ export interface SiteConfig {
 
   site?: SiteMetadata;
 
+  /**
+   * Used for [`Intl.Segmenter()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter)
+   * when generating article summary for the home page.
+   *
+   * Such as "en-US", "zh-Hans-CN", etc.
+   */
+  locales?: string | string[];
+
   output?: {
     /**
      * Output path relative to your project root

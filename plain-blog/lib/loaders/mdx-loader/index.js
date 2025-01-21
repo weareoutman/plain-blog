@@ -49,6 +49,7 @@ export function createLoader() {
         port: port2,
         assetsPublicPath: settings.assetsPublicPath,
         contentDir: settings.contentDir,
+        locales: settings.locales,
       },
       transferList: [port2],
     });

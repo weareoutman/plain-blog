@@ -1,12 +1,12 @@
 // @ts-check
 import { visit } from "unist-util-visit";
 
-const segmenterFr = new Intl.Segmenter("zh-Hans-CN", {
-  granularity: "word",
-});
-
 // Reference https://github.com/mapbox/rehype-prism
 export default function rehypeSummary(options) {
+  const segmenterFr = new Intl.Segmenter(options.locales, {
+    granularity: "word",
+  });
+
   return (tree) => {
     /** @type {string[]} */
     const summary = [];
