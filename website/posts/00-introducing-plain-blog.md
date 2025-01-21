@@ -2,7 +2,7 @@
 title: Introducing Plain Blog
 ---
 
-[The Plain Blog builder](https://weareoutman.github.io/plain-blog/) which emits zero client-side JavaScript. With minimal configuration, your blog will be fast and elegant.
+[The Plain Blog builder](https://plain-blog.js.org/) which emits zero client-side JavaScript. With minimal configuration, your blog will be fast and elegant.
 
 Although it emits no JavaScript to the the client-side, you can composite your page layout using React components, writing content in markdown or MDX. So blogs built with similar tech like [Gatsby](https://www.gatsbyjs.com/) can migrate to Plain Blog with little effort.
 
