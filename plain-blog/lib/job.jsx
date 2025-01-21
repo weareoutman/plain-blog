@@ -41,6 +41,7 @@ export default async function job({
       if (PAGE_EXT_REGEX.test(dirent.name)) {
         console.log("Building", dirent.name);
         let basename = dirent.name.replace(PAGE_EXT_REGEX, "");
+        const is404 = basename === "404";
         const isIndex = basename === "index";
         let order = "";
         if (isIndex) {
@@ -53,7 +54,7 @@ export default async function job({
           }
         }
 
-        const folder = isIndex ? distDir : path.join(distDir, basename);
+        const folder = isIndex || is404 ? distDir : path.join(distDir, basename);
         const url = `${context.baseUrl}${basename}/`;
 
         // if (basename === assetsPathPart) {
@@ -90,23 +91,25 @@ export default async function job({
           "twitter:image": imageUrl,
         };
 
+        const siteContext = {...context, frontmatter, summary, url, meta, Header, Footer};
+
         const { prelude } = await prerenderToNodeStream(
-          <SiteContext.Provider value={{...context, frontmatter, summary, url, meta, Header, Footer}}>
+          <SiteContext.Provider value={siteContext}>
             <Article>
-              <Content />
+              <Content {...siteContext} />
             </Article>
           </SiteContext.Provider>
         );
 
-        if (!isIndex) {
+        if (!isIndex && !is404) {
           await mkdir(folder);
         }
-        const indexHtmlPath = path.join(folder, "index.html");
+        const indexHtmlPath = is404 ? path.join(folder, "404.html") : path.join(folder, "index.html");
         const writableStream = createWriteStream(indexHtmlPath);
         prelude.pipe(writableStream);
         await finished(writableStream);
 
-        if (title) {
+        if (title && !is404) {
           posts.push({ url, title, date: frontmatter?.date, summary: summary, order });
         }
       }
