@@ -3,13 +3,13 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { visit } from "unist-util-visit";
 import hash from "../../utils/hash.js";
-import resizeImage from "../../utils/resizeImage.js";
+import refineImage from "../../utils/refineImage.js";
 
 export default function rehypeImage(options) {
   return async (tree) => {
     const promises = [];
-    function visitor(node) {
-      if (node.tagName !== "img") {
+    function visitor(node, index, parent) {
+      if (node.tagName !== "img" || (parent.type === "element" && parent.tagName === "a")) {
         return;
       }
 
@@ -19,17 +19,35 @@ export default function rehypeImage(options) {
         promises.push((async () => {
           const filePath = path.resolve(options.contentDir, src);
           const originalContent = await readFile(filePath);
-          const content = filePath.endsWith(".svg") ? originalContent : await resizeImage(originalContent);
+          /** @type {Buffer} */
+          let buffer;
+          /** @type {boolean} */
+          let link;
+          if (filePath.endsWith(".svg")) {
+            buffer = originalContent;
+            link = false;
+          } else {
+            ({ buffer, link } = await refineImage(originalContent));
+          }
 
-          const basename = `${hash("sha1", content, 16)}${path.extname(filePath)}`;
-          node.properties.src = `${options.assetsPublicPath}${basename}`;
+          const filename = `${hash("sha1", buffer, 16)}${path.extname(filePath)}`;
+          node.properties.src = `${options.assetsPublicPath}${filename}`;
 
           const asset = {
             type: "asset",
-            filename: basename,
-            buffer: content,
+            filename,
+            buffer,
           };
           options?.onEmitAsset?.(asset);
+
+          parent.children.splice(index, 1, {
+            type: "element",
+            tagName: "a",
+            properties: {
+              href: node.properties.src,
+            },
+            children: [node],
+          });
         })());
       }
     }

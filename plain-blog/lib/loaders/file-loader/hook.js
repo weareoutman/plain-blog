@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { readFile } from "node:fs/promises";
 import hash from "../../utils/hash.js";
-import resizeImage from "../../utils/resizeImage.js";
+import refineImage from "../../utils/refineImage.js";
 
 export function createHook(options) {
   let settings = {
@@ -23,7 +23,13 @@ export function createHook(options) {
 
     const filePath = fileURLToPath(url);
     const originalContent = await readFile(filePath);
-    const data = filePath.endsWith(".svg") ? originalContent : await resizeImage(originalContent);
+    /** @type {Buffer} */
+    let data;
+    if (filePath.endsWith(".svg")) {
+      data = originalContent;
+    } else {
+      ({ buffer: data } = await refineImage(originalContent));
+    }
 
     const filename = `${hash("sha1", data, 16)}${path.extname(filePath)}`;
 
