@@ -17,9 +17,6 @@ export default {
     // Article: "src/components/Article.jsx",
     // Home: "src/components/Home.jsx",
   },
-  shiki: {
-    theme: "light-plus",
-  },
   styles: [
     // You can use http resources for convenient, but it slows down the build.
     // "https://unpkg.com/sanitize.css",
