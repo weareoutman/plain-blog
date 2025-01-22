@@ -5,7 +5,6 @@ const segmenterFr = new Intl.Segmenter("zh-Hans-CN", {
   granularity: "word",
 });
 
-// Reference https://github.com/mapbox/rehype-prism
 export default function rehypeSummary(options) {
   return (tree) => {
     /** @type {string[]} */

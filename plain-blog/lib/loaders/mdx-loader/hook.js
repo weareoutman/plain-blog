@@ -3,8 +3,8 @@ import { createLoader } from "@mdx-js/node-loader";
 import remarkToRehype from "remark-rehype";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
+import rehypeShiki from "@shikijs/rehype";
 import remarkExtractFrontmatter from "./remark-extract-frontmatter.js";
-import rehypePrism from "./rehype-prism.js";
 import rehypeImage from "./rehype-image.js";
 import rehypeSummary from "./rehype-summary.js";
 
@@ -20,6 +20,7 @@ export function createHook(options) {
       ...settings,
       ...opts,
     };
+
     return upstreamHook.initialize({
       remarkPlugins: [
         remarkGfm,
@@ -32,8 +33,8 @@ export function createHook(options) {
                 type: "frontmatter",
                 value,
               });
-            }
-          }
+            },
+          },
         ],
         remarkToRehype,
       ],
@@ -49,7 +50,27 @@ export function createHook(options) {
             },
           },
         ],
-        rehypePrism,
+        [
+          rehypeShiki,
+          /** @type {import("@shikijs/rehype").RehypeShikiOptions} */
+          ({
+            langs: [
+              "js",
+              "jsx",
+              "ts",
+              "tsx",
+              "json",
+              "css",
+              "html",
+              "xml",
+              "md",
+              "mdx",
+              "shell",
+            ],
+            theme: "dark-plus",
+            ...settings.shiki,
+          }),
+        ],
         [
           rehypeImage,
           {
@@ -59,7 +80,7 @@ export function createHook(options) {
             contentDir: settings.contentDir,
             assetsPublicPath: settings.assetsPublicPath,
           },
-        ]
+        ],
       ],
     });
   };

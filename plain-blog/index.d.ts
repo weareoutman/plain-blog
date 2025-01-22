@@ -1,3 +1,4 @@
+import type { RehypeShikiOptions } from "@shikijs/rehype";
 import type { FC, ReactNode } from "react";
 
 export interface SiteConfig {
@@ -43,6 +44,13 @@ export interface SiteConfig {
     Header?: string;
     Footer?: string;
   };
+
+  /**
+   * Options for code highlighting tool Shiki
+   *
+   * @default { langs: ["js", "jsx", "ts", "tsx", "json", "css", "html", "xml", "md", "mdx", "shell"], theme: "dark-plus" }
+   */
+  shiki?: RehypeShikiOptions;
 
   /**
    * Customize style path list relative to your project root.

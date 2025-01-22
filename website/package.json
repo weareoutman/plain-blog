@@ -7,7 +7,6 @@
     "watch": "node --watch ../node_modules/.bin/plain-blog"
   },
   "dependencies": {
-    "prism-themes": "^1.9.0",
     "plain-blog": "file:../plain-blog",
     "sanitize.css": "^13.0.0"
   }

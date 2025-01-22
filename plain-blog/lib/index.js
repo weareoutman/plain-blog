@@ -48,6 +48,7 @@ const onEmitAsset = (asset) => {
 const loaderCommonOptions = {
   assetsPublicPath,
   contentDir,
+  shiki: config.shiki,
   onEmitAsset,
 };
 

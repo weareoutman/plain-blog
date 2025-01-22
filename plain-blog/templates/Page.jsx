@@ -24,6 +24,7 @@ export default function Page({
           content && (<meta key="name" name={name} content={content} />)
         ))}
         {site.favicon && <link rel="icon" href={site.favicon} />}
+        <style>{`.shiki{padding:1em;font-size:13px}`}</style>
         {stylesheets?.map((url) => (
           <link key={url} rel="stylesheet" href={url} />
         ))}

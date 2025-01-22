@@ -11,7 +11,8 @@ Plain Blog is under development yet.
 - [x] Auto generated index page that lists all articles
 - [x] Custom css
 - [x] Custom page components
-- [x] Prism code blocks
+- [x] Code highlighting with Shiki
+- [x] <del>Code highlighting with Prism<del>
 - [x] Custom base url
 - [x] Nested folders in content
 - [x] Images (image mark in MD, imports in MD/JS)

@@ -5,7 +5,6 @@ import { visit } from "unist-util-visit";
 import hash from "../../utils/hash.js";
 import resizeImage from "../../utils/resizeImage.js";
 
-// Reference https://github.com/mapbox/rehype-prism
 export default function rehypeImage(options) {
   return async (tree) => {
     const promises = [];

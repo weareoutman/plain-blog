@@ -17,6 +17,9 @@ export default {
     // Article: "src/components/Article.jsx",
     // Home: "src/components/Home.jsx",
   },
+  shiki: {
+    theme: "light-plus",
+  },
   styles: [
     // You can use http resources for convenient, but it slows down the build.
     // "https://unpkg.com/sanitize.css",
@@ -24,7 +27,6 @@ export default {
     // Recommend to install css packages then add them prefixed with `~`:
     "~sanitize.css",
     "~sanitize.css/typography.css",
-    "~prism-themes/themes/prism-vsc-dark-plus.css",
 
     // Also some local css files
     "src/styles.css",

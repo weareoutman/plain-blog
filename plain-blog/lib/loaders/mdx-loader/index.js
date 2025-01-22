@@ -6,7 +6,6 @@ export function createLoader() {
   let initialized = false;
   let settings = {};
 
-  const assets = [];
   let frontmatter;
   let summary;
 
@@ -49,6 +48,7 @@ export function createLoader() {
         port: port2,
         assetsPublicPath: settings.assetsPublicPath,
         contentDir: settings.contentDir,
+        shiki: settings.shiki,
       },
       transferList: [port2],
     });
