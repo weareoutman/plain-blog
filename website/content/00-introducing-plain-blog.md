@@ -100,8 +100,8 @@ With a little more work, such as [customizing components](https://github.com/wea
 
 Read more:
 
-- [Features tracking](../features-tracking)
-- [Customizing-components](../customizing-components)
+- [Features tracking](01-features-tracking.md)
+- [Customizing components](02-customizing-components.md)
 - To be continued...
 
 ## License

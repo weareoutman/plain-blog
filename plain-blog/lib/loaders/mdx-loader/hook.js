@@ -7,10 +7,11 @@ import rehypeShiki from "@shikijs/rehype";
 import remarkExtractFrontmatter from "./remark-extract-frontmatter.js";
 import rehypeImage from "./rehype-image.js";
 import rehypeSummary from "./rehype-summary.js";
+import rehypeLink from "./rehype-link.js";
+import rehypeTitle from "./rehype-title.js";
 
 export function createHook(options) {
   let settings = {
-    extensions: [".jsx"],
     ...options,
   };
   const upstreamHook = createLoader();
@@ -40,14 +41,33 @@ export function createHook(options) {
       ],
       rehypePlugins: [
         [
+          rehypeTitle,
+          {
+            updateFrontmatter(value) {
+              settings.port.postMessage({
+                type: "frontmatter.update",
+                value,
+              });
+            },
+          }
+        ],
+        [
           rehypeSummary,
           {
+            locales: settings.locales,
             setSummary(value) {
               settings.port.postMessage({
                 type: "summary",
                 value,
               });
             },
+          },
+        ],
+        [
+          rehypeLink,
+          {
+            contentDir: settings.contentDir,
+            baseUrl: settings.baseUrl,
           },
         ],
         [
@@ -76,6 +96,12 @@ export function createHook(options) {
           {
             onEmitAsset(asset) {
               settings.port.postMessage(asset);
+            },
+            updateFrontmatter(value) {
+              settings.port.postMessage({
+                type: "frontmatter.update",
+                value,
+              });
             },
             contentDir: settings.contentDir,
             assetsPublicPath: settings.assetsPublicPath,

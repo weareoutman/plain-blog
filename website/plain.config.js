@@ -8,6 +8,7 @@ export default {
     favicon: "assets/favicon.svg",
     url: "https://plain-blog.js.org",
   },
+  locales: ["en"],
   // content: {
   //   path: "content",
   // },

@@ -9,7 +9,7 @@ import Page from "./Page.jsx";
  */
 export default function Article({ children }) {
   const { frontmatter, meta, Header, Footer } = useSiteContext();
-  const title = frontmatter?.title;
+  const { title, date } = frontmatter ?? {};
 
   return (
     <Page title={title} meta={meta}>
@@ -17,7 +17,7 @@ export default function Article({ children }) {
       <main>
         <article>
           {title && <h1>{title}</h1>}
-          {frontmatter?.date && <p>{frontmatter.date}</p>}
+          {date && <p>{date}</p>}
           {children}
         </article>
       </main>

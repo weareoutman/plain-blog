@@ -12,10 +12,10 @@ export default function Page({
   meta,
   children
 }) {
-  const { stylesheets, site } = useSiteContext();
+  const { stylesheets, site, locales } = useSiteContext();
 
   return (
-    <html>
+    <html lang={locales?.[0]}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

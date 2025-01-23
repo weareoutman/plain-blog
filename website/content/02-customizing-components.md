@@ -1,6 +1,4 @@
----
-title: Customizing Components
----
+# Customizing Components
 
 Docs to be done...
 

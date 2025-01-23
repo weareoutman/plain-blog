@@ -1,9 +1,6 @@
 // @ts-check
-import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { readFile } from "node:fs/promises";
-import hash from "../../utils/hash.js";
-import refineImage from "../../utils/refineImage.js";
+import processImage from "../../utils/processImage.js";
 
 export function createHook(options) {
   let settings = {
@@ -22,18 +19,8 @@ export function createHook(options) {
     }
 
     const filePath = fileURLToPath(url);
-    const originalContent = await readFile(filePath);
-    /** @type {Buffer} */
-    let data;
-    if (filePath.endsWith(".svg")) {
-      data = originalContent;
-    } else {
-      ({ buffer: data } = await refineImage(originalContent));
-    }
+    const { filename, buffer: { buffer } } = await processImage(filePath);
 
-    const filename = `${hash("sha1", data, 16)}${path.extname(filePath)}`;
-
-    const { buffer } = data;
     settings.port?.postMessage({
       type: "asset",
       filename,

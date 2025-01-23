@@ -9,6 +9,16 @@ export interface SiteConfig {
 
   site?: SiteMetadata;
 
+  /**
+   * Used for [`Intl.Segmenter()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter)
+   * when generating article summary for the home page.
+   *
+   * Such as "en", "en-US", "zh-Hans-CN", etc.
+   *
+   * The first locale will also be used as the `lang` attribute value of the html tag by default.
+   */
+  locales?: string[];
+
   output?: {
     /**
      * Output path relative to your project root
@@ -48,7 +58,7 @@ export interface SiteConfig {
   /**
    * Options for code highlighting tool Shiki
    *
-   * @default { langs: ["js", "jsx", "ts", "tsx", "json", "css", "html", "xml", "md", "mdx", "shell"], theme: "dark-plus" }
+   * @default {langs:["js","jsx","ts","tsx","json","css","html","xml","md","mdx","shell"],theme:"dark-plus"}
    */
   shiki?: RehypeShikiOptions;
 
@@ -110,6 +120,7 @@ export interface SiteContextValue {
   frontmatter?: Record<string, any>;
   summary?: string;
   meta?: Record<string, string | undefined | null>;
+  locales?: string[];
   stylesheets?: string[];
   Header: HeaderComponent;
   Footer: FooterComponent;
@@ -118,5 +129,6 @@ export interface SiteContextValue {
 export interface JobContext {
   baseUrl: string;
   site: SiteMetadata;
+  locales?: string[];
   stylesheets?: string[];
 }

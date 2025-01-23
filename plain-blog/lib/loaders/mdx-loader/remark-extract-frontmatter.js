@@ -10,7 +10,7 @@ export default function remarkExtractFrontmatter(options) {
         json: true,
       });
       file.data.matter = matter;
-      options?.addFrontmatter(matter);
+      options?.addFrontmatter?.(matter);
     });
   };
 }

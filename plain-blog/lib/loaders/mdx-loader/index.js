@@ -32,6 +32,12 @@ export function createLoader() {
           }
           frontmatter = msg.value;
           break;
+        case "frontmatter.update":
+          frontmatter = {
+            ...frontmatter,
+            ...msg.value,
+          };
+          break;
         case "summary":
           if (summary !== undefined) {
             console.warn("Summary already set");
@@ -46,8 +52,10 @@ export function createLoader() {
       parentURL: import.meta.url,
       data: {
         port: port2,
+        baseUrl: settings.baseUrl,
         assetsPublicPath: settings.assetsPublicPath,
         contentDir: settings.contentDir,
+        locales: settings.locales,
         shiki: settings.shiki,
       },
       transferList: [port2],

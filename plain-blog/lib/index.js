@@ -46,8 +46,10 @@ const onEmitAsset = (asset) => {
 };
 
 const loaderCommonOptions = {
+  baseUrl,
   assetsPublicPath,
   contentDir,
+  locales: config.locales,
   shiki: config.shiki,
   onEmitAsset,
 };
@@ -67,6 +69,7 @@ const context = {
     ...config.site,
     favicon: faviconUrl,
   },
+  locales: config.locales,
 };
 
 for (const css of config.styles ?? []) {

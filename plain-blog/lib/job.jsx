@@ -7,8 +7,9 @@ import { prerenderToNodeStream } from "react-dom/static";
 import React from "react";
 import { SiteContext } from "plain-blog/SiteContext";
 import { flush as flushMdx } from "./loaders/mdx-loader/index.js";
+import getFileMetadata from "./utils/getFileMetadata.js";
 
-const PAGE_EXT_REGEX = /\.(?:md|js)x?$/;
+const PAGE_EXT_REGEX = /\.(?:mdx?|jsx)$/;
 
 /**
  * @typedef {import("react").FC<P>} FC<P>
@@ -45,29 +46,17 @@ export default async function job({
     if (PAGE_EXT_REGEX.test(filename)) {
       console.log("Building", filename);
       const isRoot = parentDir === contentDir;
-      let basename = filename.replace(PAGE_EXT_REGEX, "");
-      const is404 = isRoot && basename === "404";
-      const isIndex = basename === "index";
-      let order = "";
-      if (isIndex) {
-        if (isRoot) {
-          hasRootIndex = true;
-        }
-      } else if (/^\d\d+-/.test(basename)) {
-        // If the file name starts with a number with at least two digits followed by a dash, it will be treated as an ordered article.
-        const matches = basename.match(/^(\d\d+)-(.*)$/);
-        if (matches) {
-          [, order, basename] = matches;
-          hasOrderPrefix = true;
-        }
+      const relativeParentDir = path.relative(distDir, parentDistDir);
+      const { isIndex, is404, order, relativeDir, relativeUrl } = getFileMetadata(filename, relativeParentDir);
+      if (isIndex && isRoot) {
+        hasRootIndex = true;
+      }
+      if (order) {
+        hasOrderPrefix = true;
       }
 
-      const folder = isIndex || is404 ? parentDistDir : path.join(parentDistDir, basename);
-      const url = `${context.baseUrl}${basename}/`;
-
-      // if (basename === assetsPathPart) {
-      //   throw new Error("The folder of the article cannot be the same as the assets folder.");
-      // }
+      const folder = path.join(parentDistDir, relativeDir);
+      const url = `${context.baseUrl}${relativeUrl}`;
 
       const Content = (await import(path.join(parentDir, filename))).default;
       const { frontmatter, summary } = await flushMdx();
@@ -79,7 +68,7 @@ export default async function job({
 
       const description = frontmatter?.description;
       const absoluteUrl = url && site.url ? new URL(url, site.url).toString() : undefined;
-      const imageUrl = site.url && site.favicon ? new URL(site.favicon, site.url).toString() : undefined;
+      const imageUrl = frontmatter?.image ?? (site.url && site.favicon ? new URL(site.favicon, site.url).toString() : undefined);
 
       const meta = {
         title,
