@@ -7,6 +7,7 @@ import { init as initCss, flush as flushCss } from "./loaders/css-loader/index.j
 import { init as initFile } from "./loaders/file-loader/index.js";
 import { init as initJsx } from "./loaders/jsx-loader/index.js";
 import { init as initMdx } from "./loaders/mdx-loader/index.js";
+import { init as initRaw } from "./loaders/raw-loader/index.js";
 
 const start = performance.now();
 
@@ -58,6 +59,7 @@ initCss(loaderCommonOptions);
 initFile(loaderCommonOptions);
 initJsx(loaderCommonOptions);
 initMdx(loaderCommonOptions);
+initRaw(loaderCommonOptions);
 
 /**
  * @type {import("plain-blog").JobContext}

@@ -35,8 +35,6 @@ export function createLoader() {
 
   const flush = () => {};
 
-  const get = () => ({});
-
   return { init, flush };
 }
 

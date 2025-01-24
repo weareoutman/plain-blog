@@ -2,11 +2,8 @@
 import { register } from "node:module";
 import { MessageChannel } from "node:worker_threads";
 import { TextDecoder, TextEncoder } from "node:util";
-import postcss from "postcss";
-import postcssPresetEnv from "postcss-preset-env";
-import cssnano from "cssnano";
-import cssnanoPresetLite from "cssnano-preset-lite";
 import hash from "../../utils/hash.js";
+import transformCss from "../../utils/transformCss.js";
 
 export function createLoader() {
   let initialized = false;
@@ -47,16 +44,7 @@ export function createLoader() {
 
     const cssContent = cssAssets.map((item) => new TextDecoder().decode(item.buffer)).join("\n");
 
-    const { css: processedCss } = await postcss([
-      postcssPresetEnv(),
-      cssnano({
-        preset: cssnanoPresetLite({
-          discardComments: {
-            removeAll: true,
-          },
-        }),
-      }),
-    ]).process(cssContent, { from: "main.css" });
+    const processedCss = await transformCss(cssContent, "main.css");
 
     const filename = `main.${hash("sha1", processedCss, 8)}.css`;
 
