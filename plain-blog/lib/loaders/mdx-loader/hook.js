@@ -4,6 +4,7 @@ import remarkToRehype from "remark-rehype";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
 import rehypeShiki from "@shikijs/rehype";
+import { transformerColorizedBrackets } from "@shikijs/colorized-brackets";
 import remarkExtractFrontmatter from "./remark-extract-frontmatter.js";
 import rehypeImage from "./rehype-image.js";
 import rehypeSummary from "./rehype-summary.js";
@@ -88,6 +89,7 @@ export function createHook(options) {
               "shell",
             ],
             theme: "dark-plus",
+            transformers: [transformerColorizedBrackets()],
             ...settings.shiki,
           }),
         ],
