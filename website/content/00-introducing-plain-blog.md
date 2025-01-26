@@ -56,7 +56,7 @@ If you choose to build it from scratch, first create `package.json`:
   "scripts": {
     "build": "plain-blog",
     "dev": "NODE_ENV=development plain-blog",
-    "watch": "NODE_ENV=development plain-blog node --watch ./node_modules/.bin/plain-blog",
+    "watch": "NODE_ENV=development node --watch ./node_modules/.bin/plain-blog",
     "serve": "serve dist"
   },
   "devDependencies": {
