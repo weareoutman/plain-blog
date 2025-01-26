@@ -12,6 +12,9 @@ export default {
   // content: {
   //   path: "content",
   // },
+  shiki: {
+    theme: "dracula-soft",
+  },
   components: {
     Header: "src/components/Header.jsx",
     Footer: "src/components/Footer.jsx",

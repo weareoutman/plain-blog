@@ -68,7 +68,7 @@ If you choose to build it from scratch, first create `package.json`:
 
 Then run `npm install && npm run build`. And your site has been built, run `npm run serve`, or serve the `dist` folder with any static server.
 
-The index page may have only a header and footer by now, try adding some markdown files in `articles`, and run `npm run build` again.
+The index page may have only a header and footer by now, try adding some markdown files in `content`, and run `npm run build` again.
 
 In most case, you need some custom css, as well as other configs to improve your blog. Add a config file named `plain.config.js` in your project root:
 

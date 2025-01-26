@@ -1,5 +1,11 @@
 html {
-  --primary-color: rgb(230, 59, 26);
+  --primary-color: rgb(92, 106, 196);
+  --text-color: rgb(69, 79, 91);
+  --background-color: rgb(255, 255, 255);
+  --muted-color: rgb(230, 230, 230);
+
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 header,
@@ -31,7 +37,11 @@ article > p > img {
 }
 
 :not(pre) > code {
-  background-color: hsl(10, 20%, 94%);
-  color: var(--primary-color);
-  padding: 0 3px;
+  background-color: var(--muted-color);
+  padding: .125em .25em .125em;
+  border-radius: 0.25em;
+}
+
+.shiki {
+  border-radius: 0.5em;
 }
