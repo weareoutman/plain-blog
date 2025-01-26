@@ -13,7 +13,9 @@ export default {
   //   path: "content",
   // },
   shiki: {
-    theme: "dracula-soft",
+    theme: "light-plus",
+    // Disable default colorized brackets
+    transformers: [],
   },
   components: {
     Header: "src/components/Header.jsx",
