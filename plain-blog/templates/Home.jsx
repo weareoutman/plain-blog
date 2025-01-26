@@ -1,14 +1,13 @@
 // @ts-check
 import React from "react";
 import { useSiteContext } from "plain-blog/SiteContext";
-import Page from "./Page.jsx";
 
 /**
  * @param {import("plain-blog").HomeProps} props
  * @returns {import("react").JSX.Element}
  */
 export default function Home({ articles }) {
-  const { site, meta, Header, Footer } = useSiteContext();
+  const { site, meta, Page, Header, Footer } = useSiteContext();
 
   return (
     <Page title={site.title} meta={meta}>

@@ -12,7 +12,7 @@ export default function Page({
   meta,
   children
 }) {
-  const { stylesheets, site, locales } = useSiteContext();
+  const { stylesheets, site, locales, scripts, } = useSiteContext();
 
   return (
     <html lang={locales?.[0]}>
@@ -27,6 +27,9 @@ export default function Page({
         <style>{`.shiki{padding:1em;font-size:14px}`}</style>
         {stylesheets?.map((url) => (
           <link key={url} rel="stylesheet" href={url} />
+        ))}
+        {scripts?.map((url) => (
+          <script key={url} src={url} async />
         ))}
       </head>
       <body>

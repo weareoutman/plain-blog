@@ -1,14 +1,13 @@
 // @ts-check
 import React from "react";
 import { useSiteContext } from "plain-blog/SiteContext";
-import Page from "./Page.jsx";
 
 /**
  * @param {import("plain-blog").ArticleProps} props
  * @returns {import("react").JSX.Element}
  */
 export default function Article({ children }) {
-  const { frontmatter, meta, Header, Footer } = useSiteContext();
+  const { frontmatter, meta, Page, Header, Footer } = useSiteContext();
   const { title, date } = frontmatter ?? {};
 
   return (

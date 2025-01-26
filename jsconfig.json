@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "jsx": "preserve"
+  },
+  "include": [
+    "plain-blog/src/**/*",
+    "plain-blog/lib/**/*",
+    "plain-blog/index.d.ts",
+    "website/src/**/*"
+  ]
+}

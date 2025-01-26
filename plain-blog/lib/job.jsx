@@ -1,9 +1,8 @@
 // @ts-check
 import path from "node:path";
-import { createWriteStream, existsSync } from "node:fs";
-import { copyFile, mkdir, readdir } from "node:fs/promises";
-import { finished } from "node:stream/promises";
-import { prerenderToNodeStream } from "react-dom/static";
+import { existsSync } from "node:fs";
+import { copyFile, mkdir, readdir, writeFile } from "node:fs/promises";
+import { renderToStaticMarkup } from "react-dom/server";
 import React from "react";
 import { SiteContext } from "plain-blog/SiteContext";
 import { flush as flushMdx } from "./loaders/mdx-loader/index.js";
@@ -29,7 +28,7 @@ const PAGE_EXT_REGEX = /\.(?:mdx?|jsx)$/;
 export default async function job({
   distDir,
   contentDir,
-  components: { Article, Home, Header, Footer },
+  components: { Article, Home, Page, Header, Footer },
   context,
 }) {
   const articles = [];
@@ -88,9 +87,9 @@ export default async function job({
         "twitter:image": imageUrl,
       };
 
-      const siteContext = {...context, frontmatter, summary, url, meta, Header, Footer};
+      const siteContext = {...context, frontmatter, summary, url, meta, Page, Header, Footer};
 
-      const { prelude } = await prerenderToNodeStream(
+      const indexHtmlContent = await renderToStaticMarkup(
         <SiteContext.Provider value={siteContext}>
           <Article>
             <Content {...siteContext} />
@@ -102,9 +101,7 @@ export default async function job({
         await mkdir(folder);
       }
       const indexHtmlPath = is404 ? path.join(folder, "404.html") : path.join(folder, "index.html");
-      const writableStream = createWriteStream(indexHtmlPath);
-      prelude.pipe(writableStream);
-      await finished(writableStream);
+      await writeFile(indexHtmlPath, indexHtmlContent);
 
       if (title && !is404) {
         articles.push({ url, title, date: frontmatter?.date, summary: summary, order });
@@ -170,15 +167,12 @@ export default async function job({
     }
 
     const listHtmlPath = path.join(distDir, "index.html");
-
-    const { prelude } = await prerenderToNodeStream(
-      <SiteContext.Provider value={{...context, meta, Header, Footer}}>
+    const listHtmlContent = await renderToStaticMarkup(
+      <SiteContext.Provider value={{...context, meta, Page, Header, Footer}}>
         <Home articles={articles} />
       </SiteContext.Provider>
     );
 
-    const writableStream = createWriteStream(listHtmlPath);
-    prelude.pipe(writableStream);
-    await finished(writableStream);
+    await writeFile(listHtmlPath, listHtmlContent);
   }
 }

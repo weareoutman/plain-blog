@@ -8,6 +8,7 @@ import { init as initFile } from "./loaders/file-loader/index.js";
 import { init as initJsx } from "./loaders/jsx-loader/index.js";
 import { init as initMdx } from "./loaders/mdx-loader/index.js";
 import { init as initRaw } from "./loaders/raw-loader/index.js";
+import processClientScripts from "./utils/processClientScripts.js";
 
 const start = performance.now();
 
@@ -41,6 +42,12 @@ if (favicon) {
   }
 }
 
+/** @type {string[] | undefined} */
+let scripts;
+if (config.scripts?.length) {
+  scripts = await processClientScripts(config.scripts, config.scriptsConfig, assetsDir, assetsPublicPath);
+}
+
 const assets = [];
 const onEmitAsset = (asset) => {
   assets.push(asset);
@@ -72,6 +79,8 @@ const context = {
     favicon: faviconUrl,
   },
   locales: config.locales,
+  scripts,
+  // headExtraNodes: config.headExtraNodes,
 };
 
 for (const css of config.styles ?? []) {
@@ -84,7 +93,7 @@ for (const css of config.styles ?? []) {
   );
 }
 
-const componentNames = ["Article", "Home", "Header", "Footer"];
+const componentNames = ["Article", "Home", "Page", "Header", "Footer"];
 /** @type {import("plain-blog").ComponentMap} */
 const components = Object.fromEntries(await Promise.all(componentNames.map(async (name) =>
   [

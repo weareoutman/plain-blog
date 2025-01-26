@@ -1,5 +1,6 @@
 import type { RehypeShikiOptions } from "@shikijs/rehype";
-import type { FC, ReactNode } from "react";
+import type { FC, PropsWithChildren, ReactNode } from "react";
+import type { Loader } from "esbuild";
 
 export interface SiteConfig {
   /**
@@ -51,6 +52,7 @@ export interface SiteConfig {
      * such as `src/components/Article.jsx`
      */
     Article?: string;
+    Page?: string;
     Header?: string;
     Footer?: string;
   };
@@ -63,13 +65,40 @@ export interface SiteConfig {
   shiki?: RehypeShikiOptions;
 
   /**
-   * Customize style path list relative to your project root.
+   * Customize CSS path list relative to your project root.
+   *
+   * CSS files will be processed by PostCSS, so you can use tomorrow's CSS today.
    *
    * Prefix with `~` to import from node packages.
    *
    * Can be an http resource, too.
    */
   styles?: string[];
+
+  /**
+   * In case you do need some client-side JavaScript anyway,
+   * add a list of JS path list relative to your project root.
+   *
+   * JS files will be bundled by esbuild, by default:
+   *
+   * - SVG files will be loaded as text.
+   * - CSS files will be processed by PostCSS and then loaded as text.
+   * - Images will be loaded as file.
+   *
+   * Set `scriptsConfig` to override the default behavior.
+   *
+   * Prefix with `~` to import from node packages.
+   *
+   * Can be an http resource, too.
+   */
+  scripts?: string[];
+
+  scriptsConfig?: ScriptsConfig;
+}
+
+export interface ScriptsConfig {
+  /** esbuild loader options */
+  loader?: { [ext: string]: Loader };
 }
 
 export interface HomeProps {
@@ -95,11 +124,19 @@ export type HeaderComponent = FC<{ type?: "home" | "article" }>;
 
 export type FooterComponent = FC<{ type?: "home" | "article" }>;
 
+export interface PageProps extends PropsWithChildren {
+  title?: string;
+  meta?: Record<string, string | undefined | null>;
+}
+
+export type PageComponent = FC<PageProps>;
+
 export interface ComponentMap {
   Home: HomeComponent;
   Article: ArticleComponent;
   Header: HeaderComponent;
   Footer: FooterComponent;
+  Page: PageComponent;
 }
 
 export interface SiteMetadata {
@@ -111,6 +148,8 @@ export interface SiteMetadata {
   favicon?: string;
   /** The website url, such as `https://example.com` */
   url?: string;
+
+  [key: string]: any;
 }
 
 export interface SiteContextValue {
@@ -121,7 +160,33 @@ export interface SiteContextValue {
   summary?: string;
   meta?: Record<string, string | undefined | null>;
   locales?: string[];
+
+  /**
+   * CSS url list.
+   *
+   * Usage in your component:
+   *
+   * ```jsx
+   * {stylesheets?.map((url) => (
+   *   <link key={url} rel="stylesheet" href={url} />
+   * )}
+   * ```
+   */
   stylesheets?: string[];
+
+  /**
+   * JS url list.
+   *
+   * Usage in your component:
+   *
+   * ```jsx
+   * {scripts?.map((url) => (
+   *   <script key={url} src={url} async />
+   * )}
+   * ```
+   */
+  scripts?: string[];
+  Page: PageComponent;
   Header: HeaderComponent;
   Footer: FooterComponent;
 }
@@ -131,4 +196,5 @@ export interface JobContext {
   site: SiteMetadata;
   locales?: string[];
   stylesheets?: string[];
+  scripts?: string[];
 }

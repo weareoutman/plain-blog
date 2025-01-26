@@ -5,7 +5,7 @@ import { transformFile } from "@swc/core";
 
 export function createHook(options) {
   let settings = {
-    extensions: [".jsx"],
+    extensions: [".jsx", ".ts", ".tsx"],
     ...options,
   };
   const initialize = (opts) => {
@@ -27,7 +27,7 @@ export function createHook(options) {
       jsc: {
         target: "es2022",
         parser: {
-          syntax: "ecmascript",
+          syntax: /\.tsx?$/.test(filename) ? "typescript" : "ecmascript",
           jsx: true,
         },
         transform: {

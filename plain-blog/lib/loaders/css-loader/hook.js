@@ -23,10 +23,10 @@ export function createHook(options) {
     }
 
     if (HTTP_REGEX.test(url)) {
-      console.log(`Fetching ${url}`);
+      console.log(`Fetching "${url}"`);
       const response = await fetch(url);
       if (!response.ok) {
-        throw new Error(`Failed to load ${url}, status: ${response.status}`);
+        throw new Error(`Failed to load "${url}", status: ${response.status}`);
       }
       const buffer = await response.arrayBuffer();
 
