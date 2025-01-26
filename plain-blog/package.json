@@ -1,6 +1,6 @@
 {
   "name": "plain-blog",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "type": "module",
   "bin": {
     "plain-blog": "./bin/plain-blog.js"

@@ -2,7 +2,7 @@
 import { createRequire } from "node:module";
 import path from "node:path";
 import { existsSync } from "node:fs";
-import { copyFile, mkdir, rm, writeFile } from "node:fs/promises";
+import { mkdir, rm, writeFile } from "node:fs/promises";
 import { init as initCss, flush as flushCss } from "./loaders/css-loader/index.js";
 import { init as initFile } from "./loaders/file-loader/index.js";
 import { init as initJsx } from "./loaders/jsx-loader/index.js";
@@ -32,16 +32,6 @@ const favicon = config.site?.favicon ?? "assets/favicon.png";
 await rm(distDir, { recursive: true, force: true });
 await mkdir(assetsDir, { recursive: true });
 
-let faviconUrl;
-if (favicon) {
-  const faviconPath = path.resolve(process.cwd(), favicon);
-  if (existsSync(faviconPath)) {
-    const faviconFilename = path.basename(faviconPath);
-    await copyFile(faviconPath, path.join(assetsDir, faviconFilename));
-    faviconUrl = `${assetsPublicPath}${faviconFilename}`;
-  }
-}
-
 /** @type {string[] | undefined} */
 let scripts;
 if (config.scripts?.length) {
@@ -67,6 +57,13 @@ initFile(loaderCommonOptions);
 initJsx(loaderCommonOptions);
 initMdx(loaderCommonOptions);
 initRaw(loaderCommonOptions);
+
+/** @type {string} */
+let faviconUrl;
+if (favicon) {
+  const faviconPath = path.resolve(process.cwd(), favicon);
+  faviconUrl = (await import(faviconPath)).default;
+}
 
 /**
  * @type {import("plain-blog").JobContext}
