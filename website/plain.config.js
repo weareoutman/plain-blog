@@ -9,9 +9,7 @@ export default {
     url: "https://plain-blog.js.org",
   },
   locales: ["en"],
-  // content: {
-  //   path: "content",
-  // },
+  toc: true,
   shiki: {
     theme: "light-plus",
     // Disable default colorized brackets

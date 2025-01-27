@@ -29,7 +29,7 @@ export default async function job({
   distDir,
   contentDir,
   components: { Article, Home, Page, Header, Footer },
-  context,
+  context: { toc: enableToc, ...context },
 }) {
   const articles = [];
   let hasRootIndex = false;
@@ -58,7 +58,7 @@ export default async function job({
       const url = `${context.baseUrl}${relativeUrl}`;
 
       const Content = (await import(path.join(parentDir, filename))).default;
-      const { frontmatter, summary } = await flushMdx();
+      const { frontmatter, summary, toc } = await flushMdx();
 
       const title = frontmatter?.title;
       if (!title) {
@@ -87,7 +87,10 @@ export default async function job({
         "twitter:image": imageUrl,
       };
 
-      const siteContext = {...context, frontmatter, summary, url, meta, Page, Header, Footer};
+      // To check whether to use TOC for an article,
+      // prefer config in the frontmatter than the global setting.
+      const articleToc = (frontmatter?.toc ?? enableToc) ? toc : undefined;
+      const siteContext = {...context, frontmatter, summary, toc: articleToc, url, meta, Page, Header, Footer};
 
       const indexHtmlContent = await renderToStaticMarkup(
         <SiteContext.Provider value={siteContext}>

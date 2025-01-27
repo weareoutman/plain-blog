@@ -8,6 +8,7 @@ export function createLoader() {
 
   let frontmatter;
   let summary;
+  let toc;
 
   const init = (options) => {
     if (initialized) {
@@ -44,6 +45,9 @@ export function createLoader() {
           }
           summary = msg.value;
           break;
+        case "toc":
+          toc = msg.value;
+          break;
       }
     });
     port1.unref();
@@ -66,9 +70,11 @@ export function createLoader() {
     const result = {
       frontmatter,
       summary,
+      toc,
     }
     frontmatter = undefined;
     summary = undefined;
+    toc = undefined;
     return result;
   };
 

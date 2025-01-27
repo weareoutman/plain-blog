@@ -57,6 +57,9 @@ export interface SiteConfig {
     Footer?: string;
   };
 
+  /** Whether to enable TOC (table of contents) */
+  toc?: boolean;
+
   /**
    * Options for code highlighting tool Shiki
    *
@@ -158,6 +161,7 @@ export interface SiteContextValue {
   url?: string;
   frontmatter?: Record<string, any>;
   summary?: string;
+  toc?: TocNode[];
   meta?: Record<string, string | undefined | null>;
   locales?: string[];
 
@@ -197,4 +201,12 @@ export interface JobContext {
   locales?: string[];
   stylesheets?: string[];
   scripts?: string[];
+  toc?: boolean;
+}
+
+export interface TocNode {
+  text: string;
+  id: string;
+  depth: number;
+  children: TocNode[];
 }

@@ -77,7 +77,7 @@ const context = {
   },
   locales: config.locales,
   scripts,
-  // headExtraNodes: config.headExtraNodes,
+  toc: config.toc,
 };
 
 for (const css of config.styles ?? []) {

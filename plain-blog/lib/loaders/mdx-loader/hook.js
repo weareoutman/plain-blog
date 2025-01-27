@@ -3,6 +3,9 @@ import { createLoader } from "@mdx-js/node-loader";
 import remarkToRehype from "remark-rehype";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
+import remarkCustomHeaderId from "remark-custom-header-id";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeShiki from "@shikijs/rehype";
 import { transformerColorizedBrackets } from "@shikijs/colorized-brackets";
 import remarkExtractFrontmatter from "./remark-extract-frontmatter.js";
@@ -10,6 +13,7 @@ import rehypeImage from "./rehype-image.js";
 import rehypeSummary from "./rehype-summary.js";
 import rehypeLink from "./rehype-link.js";
 import rehypeTitle from "./rehype-title.js";
+import rehypeExtractToc from "./rehype-extract-toc.js";
 
 export function createHook(options) {
   let settings = {
@@ -38,6 +42,7 @@ export function createHook(options) {
             },
           },
         ],
+        remarkCustomHeaderId,
         remarkToRehype,
       ],
       rehypePlugins: [
@@ -109,6 +114,16 @@ export function createHook(options) {
             assetsPublicPath: settings.assetsPublicPath,
           },
         ],
+        rehypeSlug,
+        [rehypeExtractToc, {
+          setToc(value) {
+            settings.port.postMessage({
+              type: "toc",
+              value,
+            });
+          },
+        }],
+        [rehypeAutolinkHeadings, { behavior: "wrap" }],
       ],
     });
   };

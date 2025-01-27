@@ -7,7 +7,7 @@ import { useSiteContext } from "plain-blog/SiteContext";
  * @returns {import("react").JSX.Element}
  */
 export default function Article({ children }) {
-  const { frontmatter, meta, Page, Header, Footer } = useSiteContext();
+  const { frontmatter, toc, meta, Page, Header, Footer } = useSiteContext();
   const { title, date } = frontmatter ?? {};
 
   return (
@@ -19,8 +19,26 @@ export default function Article({ children }) {
           {date && <p>{date}</p>}
           {children}
         </article>
+        {!!toc?.length && (
+          <nav>
+            <TocTree toc={toc} />
+          </nav>
+        )}
       </main>
       <Footer type="article" />
     </Page>
-  )
+  );
+}
+
+function TocTree({ toc }) {
+  return (
+    <ul>
+      {toc.map(({ id, text, children }) => (
+        <li key={id}>
+          <a href={`#${id}`}>{text}</a>
+          {!!children.length && <TocTree toc={children} />}
+        </li>
+      ))}
+    </ul>
+  );
 }
