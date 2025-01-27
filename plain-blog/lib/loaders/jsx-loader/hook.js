@@ -1,7 +1,8 @@
 // @ts-check
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { transformFile } from "@swc/core";
+import { readFile } from "node:fs/promises";
+import { transform } from "@swc/core";
 
 export function createHook(options) {
   let settings = {
@@ -21,8 +22,10 @@ export function createHook(options) {
 
     const filePath = fileURLToPath(url);
     const filename = path.basename(filePath);
+    const content = await readFile(filePath, "utf-8");
 
-    const { code } = await transformFile(filePath, {
+    // @swc/wasm has no `transformFile`
+    const { code } = await transform(content, {
       filename,
       jsc: {
         target: "es2022",
