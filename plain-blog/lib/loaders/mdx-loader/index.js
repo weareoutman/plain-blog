@@ -61,6 +61,7 @@ export function createLoader() {
         contentDir: settings.contentDir,
         locales: settings.locales,
         shiki: settings.shiki,
+        elementTransforms: settings.elementTransforms,
       },
       transferList: [port2],
     });

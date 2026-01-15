@@ -14,6 +14,7 @@ import rehypeSummary from "./rehype-summary.js";
 import rehypeLink from "./rehype-link.js";
 import rehypeTitle from "./rehype-title.js";
 import rehypeExtractToc from "./rehype-extract-toc.js";
+import rehypeElementTransform from "./rehype-element-transform.js";
 
 export function createHook(options) {
   let settings = {
@@ -124,6 +125,7 @@ export function createHook(options) {
           },
         }],
         [rehypeAutolinkHeadings, { behavior: "wrap" }],
+        [rehypeElementTransform, { transforms: settings.elementTransforms }],
       ],
     });
   };

@@ -49,6 +49,7 @@ const loaderCommonOptions = {
   contentDir,
   locales: config.locales,
   shiki: config.shiki,
+  elementTransforms: config.elementTransforms,
   onEmitAsset,
 };
 

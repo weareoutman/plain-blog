@@ -97,6 +97,17 @@ export interface SiteConfig {
   scripts?: string[];
 
   scriptsConfig?: ScriptsConfig;
+
+  /**
+   * Transform HTML elements to custom elements.
+   * Key is the original tag name, value is the new tag name.
+   *
+   * Example: `{ pre: "cp-pre" }` will transform `<pre>` to `<cp-pre>`
+   *
+   * This is useful for adding custom behaviors (like copy buttons)
+   * via client-side JavaScript without modifying the core library.
+   */
+  elementTransforms?: Record<string, string>;
 }
 
 export interface ScriptsConfig {
