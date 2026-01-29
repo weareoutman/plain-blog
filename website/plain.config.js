@@ -32,4 +32,10 @@ export default {
     // Also some local css files
     "src/styles.css",
   ],
+  scripts: [
+    "src/cp-pre/cp-pre.js",
+  ],
+  elementTransforms: {
+    pre: "cp-pre",
+  },
 }

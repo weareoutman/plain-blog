@@ -8,6 +8,7 @@
     "plain-blog/src/**/*",
     "plain-blog/lib/**/*",
     "plain-blog/index.d.ts",
-    "website/src/**/*"
+    "website/src/**/*",
+    "global.d.ts"
   ]
 }

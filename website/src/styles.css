@@ -3,6 +3,7 @@ html {
   --text-color: rgb(69, 79, 91);
   --background-color: rgb(255, 255, 255);
   --muted-color: rgb(230, 230, 230);
+  --font-monospace: ui-monospace,"Menlo","Consolas","Roboto Mono","Ubuntu Monospace","Noto Mono","Oxygen Mono","Liberation Mono",monospace,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 
   background-color: var(--background-color);
   color: var(--text-color);
@@ -91,7 +92,7 @@ article > p > img {
   margin-right: auto;
 }
 
-:not(pre) > code {
+:not(pre):not(cp-pre) > code {
   background-color: var(--muted-color);
   padding: .125em .25em .125em;
   border-radius: 0.25em;
@@ -101,6 +102,14 @@ article > p > img {
   border-radius: 0.5em;
   background-color: rgb(246, 248, 250)!important;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+}
+
+cp-pre {
+  display: block;
+  position: relative;
+  white-space: pre;
+  overflow-x: auto;
+  font-family: var(--font-monospace);
 }
 
 @media screen and (max-width: 996px) {
