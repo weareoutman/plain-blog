@@ -66,7 +66,7 @@ export default function processClientScripts(scripts, config, assetsDir, assetsP
           setup(build) {
             build.onResolve({ filter: /\.css$/ }, (args) => {
               return {
-                path: path.join(args.resolveDir, args.path),
+                path: require.resolve(args.path, { paths: [args.resolveDir] }),
                 namespace: 'inline-css-ns',
               };
             });
