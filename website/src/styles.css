@@ -1,3 +1,21 @@
+@import "tailwindcss";
+
+@layer base {
+  h1 {
+    font-size: var(--text-2xl);
+  }
+  h2 {
+    font-size: var(--text-xl);
+  }
+  h3 {
+    font-size: var(--text-lg);
+  }
+  a {
+    color: var(--color-blue-600);
+    text-decoration-line: underline;
+  }
+}
+
 html {
   --primary-color: rgb(92, 106, 196);
   --text-color: rgb(69, 79, 91);

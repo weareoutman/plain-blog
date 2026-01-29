@@ -26,8 +26,8 @@ export default {
     // "https://unpkg.com/sanitize.css",
 
     // Recommend to install css packages then add them prefixed with `~`:
-    "~sanitize.css",
-    "~sanitize.css/typography.css",
+    // "~sanitize.css",
+    // "~sanitize.css/typography.css",
 
     // Also some local css files
     "src/styles.css",

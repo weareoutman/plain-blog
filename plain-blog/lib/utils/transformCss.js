@@ -3,6 +3,7 @@ import postcss from "postcss";
 import postcssPresetEnv from "postcss-preset-env";
 import cssnano from "cssnano";
 import cssnanoPresetLite from "cssnano-preset-lite";
+import tailwindcss from "@tailwindcss/postcss";
 
 /**
  * @param {string} content
@@ -19,6 +20,7 @@ export default async function transformCss(content, filename) {
         },
       }),
     }),
+    tailwindcss(),
   ]).process(content, { from: filename });
   return output.css;
 }

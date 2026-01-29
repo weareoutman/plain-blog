@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "plain-blog": "file:../plain-blog",
-    "sanitize.css": "^13.0.0"
+    "sanitize.css": "^13.0.0",
+    "tailwindcss": "^4.1.18"
   }
 }
