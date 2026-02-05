@@ -96,6 +96,7 @@ export function createHook(options) {
             ],
             theme: "dark-plus",
             transformers: [transformerColorizedBrackets()],
+            defaultLanguage: "text",
             ...settings.shiki,
           }),
         ],
