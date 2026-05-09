@@ -6,7 +6,7 @@
     "plain-blog": "./bin/plain-blog.js"
   },
   "engines": {
-    "node": "^18.19.0 || ^20.8.0 || >=22"
+    "node": "^22.11.0 || ^24.11.0 || >=26.0"
   },
   "exports": {
     ".": {
@@ -19,26 +19,26 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@mdx-js/node-loader": "^3.1.0",
-    "@shikijs/colorized-brackets": "^3.22.0",
-    "@shikijs/rehype": "^3.22.0",
-    "@swc/core": "^1.10.9",
-    "cssnano": "^7.0.6",
-    "cssnano-preset-lite": "^4.0.3",
-    "esbuild": "^0.27.2",
+    "@mdx-js/node-loader": "^3.1.1",
+    "@shikijs/colorized-brackets": "^4.0.2",
+    "@shikijs/rehype": "^4.0.2",
+    "@swc/core": "^1.15.33",
+    "cssnano": "^8.0.1",
+    "cssnano-preset-lite": "^5.0.0",
+    "esbuild": "^0.28.0",
     "hast-util-to-string": "^3.0.1",
-    "js-yaml": "^4.1.0",
-    "postcss": "^8.5.1",
-    "postcss-preset-env": "^11.1.2",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "js-yaml": "^4.1.1",
+    "postcss": "^8.5.14",
+    "postcss-preset-env": "^11.2.1",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-slug": "^6.0.0",
     "remark-custom-header-id": "^1.0.0",
     "remark-frontmatter": "^5.0.0",
-    "remark-gfm": "^4.0.0",
-    "remark-rehype": "^11.1.1",
+    "remark-gfm": "^4.0.1",
+    "remark-rehype": "^11.1.2",
     "sharp": "^0.34.5",
-    "unist-util-visit": "^5.0.0"
+    "unist-util-visit": "^5.1.0"
   }
 }
